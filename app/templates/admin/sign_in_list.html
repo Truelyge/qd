@@ -1,0 +1,31 @@
+﻿{% extends "admin/admin_model.html" %}
+{% import "admin/comment_page.html" as pg %}
+{% block content %}
+<meta charset="UTF-8">
+<div class="admin_main">
+	<div class="admin_main1">{{user.name}}的签到记录</div>
+	<table class="admin_main2" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<th style="width:200px;">编号</th>
+			<th style="width:200px;">签到类型</th>
+			<th style="width:200px;">签到时间</th>
+			<th style="width:200px;">员工ID</th>
+			<!--<th style="width:200px;">价格</th>-->
+			<!--<th style="width:200px;">操作</th>-->
+		</tr>
+		{% for v in page_data.items %}
+		<tr>
+			<td>{{ v.id }}</td>
+			<td>{{ v.s_type }}</td>
+			<td>{{ v.s_time }}</td>
+			<td>{{ v.user_id }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+
+	<!--最下方翻页栏-->
+		<div style="margin-left:35%">
+			{{ pg.page(page_data,'admin.sign_in_list',user.id) }}
+		</div>
+</div>
+{% endblock %}

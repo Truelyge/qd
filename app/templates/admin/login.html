@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+<title>login</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.css') }}">
+    <link href="{{ url_for('static',filename='css/css10.css') }}" rel="stylesheet" type="text/css" />
+</head>
+<body background="{{url_for('static', filename='img/bg.jpg')}}" style="background-size:100%;">
+<!--<body style="background-image:url_for(img/bg.jpg);background-size:100%;">-->
+<!--<img src="{{ url_for('static',filename='photo/001.bmp') }}" />-->
+
+
+<div class="login">
+    <div class="login1">用户登录</div>
+    {% for msg in get_flashed_messages(category_filter=["ok"]) %}
+
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+        </button>
+        <h4><i class="icon fa fa-check"></i> 操作成功</h4>
+        {{ msg }}
+    </div>
+    {% endfor %}
+    {% for msg in get_flashed_messages(category_filter=["err"]) %}
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+        </button>
+        <h4><i class="icon fa fa-check"></i> 操作失败</h4>
+        {{ msg }}
+    </div>
+    {% endfor %}
+
+    <form method="post">
+        <div class="login4">{{ form.name.label }}</div>
+        {{ form.name }}
+        {% for err in form.name.errors %}
+        <div class="col-md-12">
+            <p style="color: red">{{ err }}</p>
+        </div>
+        {% endfor %}
+        {# <input class="login2" type="text" name="account" placeholder="用户名/邮箱/手机号码"/><br/> #}
+
+        <div class="login4">{{ form.pwd.label }}</div>
+        {{ form.pwd }}
+        {% for err in form.pwd.errors %}
+        <div class="col-md-12">
+            <p style="color: red">{{ err }}</p>
+        </div>
+        {% endfor %}
+        {# <input class="login2" type="text" name="password" placeholder="密码"/><br/> #}
+        {{ form.csrf_token }}
+        {{ form.submit }}
+        {#
+        <button class="login3" name="submit" type="button">登录</button>
+        #}
+    </form>
+</div>
+</body>
+</html>

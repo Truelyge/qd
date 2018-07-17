@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>login</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.css') }}">
+    <link href="{{ url_for('static',filename='css/css10.css') }}" rel="stylesheet" type="text/css" />
+</head>
+<body background="{{url_for('static', filename='img/background.png')}}" style="background-size:100%;">
+<!--<body style="background-image:url_for(img/bg.jpg);background-size:100%;">-->
+<!--<img src="{{ url_for('static',filename='photo/001.bmp') }}" />-->
+
+<a style="float:right;font-family:微软雅黑,宋体;color:black;margin-top:-100px;" href="{{ url_for('admin.login') }}">管理员入口</a>
+<div class="login">
+    <div class="login1">签到</div>
+    {% for msg in get_flashed_messages(category_filter=["ok"]) %}
+
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+        </button>
+        <h4><i class="icon fa fa-check"></i> 操作成功</h4>
+        {{ msg }}
+    </div>
+    {% endfor %}
+    {% for msg in get_flashed_messages(category_filter=["err"]) %}
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+        </button>
+        <h4><i class="icon fa fa-check"></i> 操作失败</h4>
+        {{ msg }}
+    </div>
+    {% endfor %}
+
+    <form method="post">
+        <div class="login4">{{ form.number.label }}</div>
+        {{ form.number }}
+        {% for err in form.number.errors %}
+        <div class="col-md-12">
+            <p style="color: red">{{ err }}</p>
+        </div>
+        {% endfor %}
+        {# <input class="login2" type="text" name="account" placeholder="用户名/邮箱/手机号码"/><br/> #}
+
+        <div class="login4">{{ form.type.label }}</div>
+        {{ form.type }}
+        {% for err in form.type.errors %}
+        <div class="col-md-12">
+            <p style="color: red">{{ err }}</p>
+        </div>
+        {% endfor %}
+        {# <input class="login2" type="text" name="password" placeholder="密码"/><br/> #}
+        {{ form.csrf_token }}
+        {{ form.submit }}
+        {#
+        <button class="login3" name="submit" type="button">登录</button>
+        #}
+    </form>
+</div>
+<script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static',filename='js/jquery.singlePageNav.min.js') }}"></script>
+<script src="{{ url_for('static',filename='js/wow.min.js') }}"></script>
+<script src="{{ url_for('static',filename='js/jquery.lazyload.min.js') }}"></script>
+<script>
+    $(function() {
+        new WOW().init();
+    })
+
+</script>
+<script src="https://cdn.bootcss.com/holder/2.9.4/holder.min.js"></script>
+</body>
+</html>
