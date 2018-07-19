@@ -1,0 +1,34 @@
+﻿{% extends "admin/admin_model.html" %}
+{% import "admin/admin_page.html" as pg %}
+{% block content %}
+<meta charset="UTF-8">
+<div class="admin_main">
+	<div class="admin_main1">员工列表</div>
+	<table class="admin_main2" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<th style="width:200px;">编号</th>
+			<th style="width:200px;">日期</th>
+			<th style="width:200px;">员工编号</th>
+			<th style="width:200px;">工作时长</th>
+			<!--<th style="width:200px;">价格</th>-->
+			<!--<th style="width:200px;">操作</th>-->
+		</tr>
+		{% for v in page_data.items %}
+		<tr>
+			<td>{{ v.id }}</td>
+			<td>{{ v.month }}</td>
+			<td>{{ v.user_id }}</td>
+			<td>{{ v.workhours }}</td>
+			<td>
+				<!--<a href="{{ url_for('admin.sign_in_list', id=v.id,page=1) }}" class="label label-success">签到记录</a>
+				<a href="{{ url_for('admin.user_edit', id=v.id) }}" class="label label-success">编辑</a>&nbsp;
+				<a href="{{ url_for('admin.user_del', id=v.id) }}" class="label label-danger">删除</a>-->
+		</tr>
+		{% endfor %}
+	</table>
+	<!--最下方翻页栏-->
+		<div style="margin-right:50%">
+			{{ pg.page(page_data,'admin.month_list') }}
+		</div>
+</div>
+{% endblock %}
