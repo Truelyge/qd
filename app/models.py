@@ -11,8 +11,11 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)  # 编号
     name = db.Column(db.String(100), unique=True)  # 名字
     number = db.Column(db.String(100), unique=True)  # 用户工号
-    workings = db.Column(db.Float,default=0.0)  # 工作时长
+    workings = db.Column(db.Float, default=0.0)  # 工作时长
     sign_in = db.relationship('Sign_in', backref='user')  # 签到表
+    day = db.relationship('Day', backref='user')  # 日记录表
+    month = db.relationship('Month', backref='user')  # 月记录表
+    year = db.relationship('Year', backref='user')  # 年记录表
 
     def __repr__(self):
         return '<User %r>' % self.name
@@ -28,7 +31,7 @@ class Sign_in(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # 所属员工
 
     def __repr__(self):
-        return "<Sign_in %r>" % self.id
+        return "<Sign_in %r>" % self.user_id
 
 
 # 管理员信息模型Admin
@@ -48,3 +51,45 @@ class Admin(db.Model):
     def check_pwd(self, pwd):
         from werkzeug.security import check_password_hash
         return check_password_hash(self.pwd, pwd)
+
+
+# 天表Day
+class Day(db.Model):
+    __tablename__ = "day"
+    __table_args__ = {"useexisting": True}
+    # 数据模型
+    id = db.Column(db.Integer, primary_key=True)  # 编号
+    day = db.Column(db.String(100))  # 日期
+    workhours = db.Column(db.Float, default=0.0)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # 所属员工
+
+    def __repr__(self):
+        return "<Day %r>" % self.day
+
+
+# 月表Month
+class Month(db.Model):
+    __tablename__ = "month"
+    __table_args__ = {"useexisting": True}
+    # 数据模型
+    id = db.Column(db.Integer, primary_key=True)  # 编号
+    month = db.Column(db.String(100))  # 日期
+    workhours = db.Column(db.Float, default=0.0)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # 所属员工
+
+    def __repr__(self):
+        return "<Month %r>" % self.month
+
+
+# 年表Year
+class Year(db.Model):
+    __tablename__ = "year"
+    __table_args__ = {"useexisting": True}
+    # 数据模型
+    id = db.Column(db.Integer, primary_key=True)  # 编号
+    year = db.Column(db.String(100))  # 日期
+    workhours = db.Column(db.Float, default=0.0)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # 所属员工
+
+    def __repr__(self):
+        return "<Year %r>" % self.year

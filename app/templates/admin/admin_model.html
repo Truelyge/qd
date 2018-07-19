@@ -20,7 +20,9 @@
 	<a href="{{ url_for('admin.index')}}" class="admin_left2">首页</a>
 	<a href="{{ url_for('admin.user_list', page=1) }}" class="admin_left2">员工列表</a>
 	<a href="{{ url_for('admin.user_add') }}" class="admin_left2">添加员工</a>
-
+	<a href="{{ url_for('admin.day_list', page=1) }}" class="admin_left2">日统计</a>
+	<a href="{{ url_for('admin.month_list', page=1) }}" class="admin_left2">月统计</a>
+	<a href="{{ url_for('admin.year_list', page=1) }}" class="admin_left2">年统计</a>
 	<a href="{{ url_for('admin.logout') }}" class="admin_left2">退出登录</a>
 </div>
 <!--上侧标题-->

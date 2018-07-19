@@ -9,7 +9,7 @@ from functools import wraps
 from . import admin
 from flask import render_template, redirect, url_for, flash, session, request, g, abort
 from app.admin.forms import LoginForm, UserForm, E_UserForm
-from app.models import Admin, User, Sign_in
+from app.models import Admin, User, Sign_in, Day, Month, Year
 from werkzeug.utils import secure_filename
 
 
@@ -84,7 +84,7 @@ def user_edit(id=None):
         try:
             if user_count == 1 and user2.name != data["name"]:
                 flash("员工号已经存在！", "err")
-                return redirect(url_for("admin.user_edit",id=id))
+                return redirect(url_for("admin.user_edit", id=id))
         except:
             pass
         user2.name = data["name"]
@@ -92,7 +92,7 @@ def user_edit(id=None):
         db.session.add(user2)
         db.session.commit()
         flash("修改员工信息成功！", "ok")
-        return redirect(url_for("admin.user_edit",id=id))
+        return redirect(url_for("admin.user_edit", id=id))
     return render_template("admin/user_edit.html", form=form, user2=user2)
 
 
@@ -101,17 +101,17 @@ def sign_in_list(id=None, page=None):
     user = User.query.filter_by(id=id).first()
     if page is None:
         page = 1
-    #page_data = Sign_in.query
-    #page_data = page_data.filter_by(user_id=id)
-    #page_data = page_data.paginate(page=page, per_page=6)
-    page_data=Sign_in.query.filter(
-        Sign_in.user_id==user.id
+    # page_data = Sign_in.query
+    # page_data = page_data.filter_by(user_id=id)
+    # page_data = page_data.paginate(page=page, per_page=6)
+    page_data = Sign_in.query.filter(
+        Sign_in.user_id == user.id
     ).order_by(
         Sign_in.s_time.desc()
-    ).paginate(page=page,per_page=6)
+    ).paginate(page=page, per_page=6)
     # print(page_data)
     # print(type(page_data))
-    return render_template("admin/sign_in_list.html", page_data=page_data,user=user)
+    return render_template("admin/sign_in_list.html", page_data=page_data, user=user)
 
 
 @admin.route("/user_del/<int:id>", methods=["GET"])
@@ -121,3 +121,33 @@ def user_del(id=None):
     db.session.commit()
     flash("员工删除成功！", "ok")
     return redirect(url_for("admin.user_list", page=1))
+
+
+@admin.route("/day_list/<int:page>/", methods=["GET"])
+def day_list(page=None):
+    if page is None:
+        page = 1
+    days = Day.query.all()
+    page_data = Day.query.order_by(Day.day.desc())
+    page_data = page_data.paginate(page=page, per_page=6)
+    return render_template("/admin/day_list.html", page_data=page_data)
+
+
+@admin.route("/month_list/<int:page>/", methods=["GET"])
+def month_list(page=None):
+    if page is None:
+        page = 1
+    days = Month.query.all()
+    page_data = Month.query.order_by(Month.month.desc())
+    page_data = page_data.paginate(page=page, per_page=6)
+    return render_template("/admin/month_list.html", page_data=page_data)
+
+
+@admin.route("/year_list/<int:page>/", methods=["GET"])
+def year_list(page=None):
+    if page is None:
+        page = 1
+    days = Year.query.all()
+    page_data = Year.query.order_by(Year.year.desc())
+    page_data = page_data.paginate(page=page, per_page=6)
+    return render_template("/admin/year_list.html", page_data=page_data)

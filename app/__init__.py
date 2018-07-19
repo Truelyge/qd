@@ -23,10 +23,12 @@ app.register_blueprint(home_blueprint)
 app.register_blueprint(admin_blueprint, url_prefix="/admin")
 
 if __name__ == "__main__":
+    """
     try:
         db.create_all()
     except:
         pass
+        """
     from app.adddata import adddata
     a = adddata()
 
